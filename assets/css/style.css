@@ -91,6 +91,7 @@ quote {
 .ptitle {
     color:white;
     border-radius: 7px 7px 0 0;
+    margin-bottom:0;
 }
 form.search button {
     padding: 2px;
