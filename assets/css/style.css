@@ -93,10 +93,11 @@ quote {
     border-radius: 7px 7px 0 0;
 }
 form.search button {
-    padding: 8px;
+    padding: 2px;
 }
 i {
-    font-size: xx-large;
+    font-size: xx-large!important;
+    color:#ffe710;
 }
 footer {
     background-color:#4498d3;
@@ -131,7 +132,7 @@ iframe {
     margin: 8px -16px;
 }
 .row, .row > .column1 {
-    padding: 15px;
+    padding: 0;
     margin: 0 auto;
 }
 .column1 {
@@ -152,9 +153,13 @@ iframe {
     float:right;
     padding-right:5%;
 }
+.bg-light {
+    background-color:rgba(240, 241, 241, 0.473)!important;
+
+}
 .contentabout {
     /*background-image: url("../images/contentbkg.png");*/
-    background-color:rgba(240, 241, 241, 0.473);
+    
     background-size:auto;
     padding: 0px 0 0 0;
     box-shadow:0px 1px 1px 1px #00000025;

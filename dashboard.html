@@ -2,10 +2,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+    
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
     <title>Brad_J | Weather Dashboard</title>
   </head>
   <body><header class="navhead">
@@ -23,26 +24,26 @@
   </header>
   
    
-    <div class="contentabout mt-5">
-      <h1 class="text-white bg-dark ptitle">Weather Dashboard</h1>
-     <div class="container">
-      <div class="row">
-            <form class="search col-sm-4">
+    <div class="content mt-5">
+      <h1 class="text-white bg-secondary ptitle">Weather Dashboard</h1>
+     <div class="row">
+      <div class="col-sm-4 bg-light">
+          <form class="search">
             <input type="text" class="bg-white" placeholder="Search..." name="search-field">
             <button class="rounded-lg btn-lg" type="submit"><p><i class="fa fa-search"></i></p></button>
+            <text class="btn-sm search-cities__lnk"><p><i class="fa fa-location-arrow" aria-hidden="true"></i>  My Location</p></text>
           </form>
+          <h3 id="city-list" class="table-bordered p-3 bg-white rounded-top border border-bottom-0">
+            CITY LIST
+          </h3>
       </div>
-        <div class="col-md-1"><p>Col 2</p></div>
-        <div class="col-md-6">Col 3</div>
+    
+        <div class="col-sm-6 bg-white">Row 2</div>
+        <div class="col-sm-6 bg-white">Row 3</div>
      </div>
-       <div class="row">
-         <div class="col-md-3">Col 4</div>
-         <div class="col-md-1"><p>Col 5</p></div>
-         <div class="col-md-6">Col 6</div>
-       </div>
-       </div>
      </div>
-    </div>
+   
+   
     
    
   
