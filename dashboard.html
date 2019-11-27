@@ -31,8 +31,8 @@
      <div class="row">
       <div class="col-sm-4 pt-4 bg-light">
           <form class="search">
-            <input type="text" class="bg-white" placeholder="Search For City" name="search-field">
-            <button class="rounded-lg btn-lg" type="submit"><p><i class="fa fa-search"></i></p></button>
+            <input type="text" class="search-button bg-white" placeholder="Search For City" name="search-field">
+            <button id="search-button" class="search-button rounded-lg btn-lg" type="submit"><p><i class="fa fa-search"></i></p></button>
             <text class="search-cities__lnk"><p><i class="fa fa-location-arrow" aria-hidden="true"></i>  My Location</p></text>
           </form>
           <button id="city-list" class="col-sm-10 offset-1 p-3 bg-white rounded-top border border-bottom-0">
@@ -40,9 +40,9 @@
           </button>
       </div>
       <div class="col p-0">
-        <div class="row card shadow-sm rounded-lg pt-5 pb-5 bg-white">Row 2</div>
+        <div id="city-weather" class="row card shadow-sm rounded-lg pt-5 pb-5 bg-white">Row 2</div>
 
-        <div class="row pt-5 pb-5 bg-white">Row 3</div>
+        <div id="5day-weather" class="row pt-5 pb-5 bg-white">Row 3</div>
       </div>
      </div>
      </div>
