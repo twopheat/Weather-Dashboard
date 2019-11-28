@@ -25,29 +25,47 @@
   
    
     <div class="container mt-5">
-     <div class="col">
+
       <h1 class="text-white bg-secondary ptitle">Weather Dashboard</h1>
      
-     <div class="row">
-      <div class="col-sm-4 pt-4 bg-light">
-          <form class="search">
-            <input type="text" class="search-button bg-white" placeholder="Search For City" name="search-field">
-            <button id="search-button" class="search-button rounded-lg btn-lg" type="submit"><p><i class="fa fa-search"></i></p></button>
-            <text class="search-cities__lnk"><p><i class="fa fa-location-arrow" aria-hidden="true"></i>  My Location</p></text>
-          </form>
-          <button id="city-list" class="col-sm-10 offset-1 p-3 bg-white rounded-top border border-bottom-0">
-            CITY LIST
-          </button>
-      </div>
-      <div class="col p-0">
-        <div id="city-weather" class="row card shadow-sm rounded-lg pt-5 pb-5 bg-white">Row 2</div>
+     <div class="row card">
+      
 
-        <div id="5day-weather" class="row pt-5 pb-5 bg-white">Row 3</div>
-      </div>
-     </div>
-     </div>
-    </div>
+          
+          <div class="card-body">
+            <div class="form-group col-sm-4 pt-4 bg-light">
+
+              <!-- form for handling input + create text box for city search-->
+              <div class="form-group">
+                <input type="text" placeholder="Pick a City..." class="btn-lg form-control" id="city-field">
+                <button type="submit" class="btn btn-default" id="city-search">
+                    <i class="fa fa-search"></i> Search</button>
+                  <button class="btn btn-default" id="clear-all">
+                    <i class="fa fa-trash"></i> Clear</button>
+              </div>
+
+
+                <div class="card">
+                    <label class="col">CITY LIST</label>
+                    <button id="city-list" placeholder="CITY LIST" class="col p-3 bg-white rounded-top border border-bottom1">ATLANTA</button>
+                </div>
+            </form>
+
+            </div>
+           
    
+            <div class="row bg-white">
+                <button id="city-weather" class="col-sm-12 shadow-sm rounded-lg pt-5 pb-5 bg-white">Row 2</button>
+                <button id="5day-weather" class="col-sm-12 card pt-5 pb-5 bg-white">Row 3</button>
+            </div>
+          </div>
+
+      </div>
+
+     </div>
+
+
+
    
     
    
@@ -57,5 +75,6 @@
     <p id="copyright">Copyright © TwoPheat</p>
  </footer>
 
-
-</body></html>
+ <script src="assets/js/script.js"></script>
+</body>
+</html>
