@@ -4,15 +4,14 @@ function wQueryURL() {
 // api.openweathermap.org/data/2.5/forecast?q=Riverside,CA&appid=1583681dac81837eff11223ef03cd809
   // Begin building an object to contain our API call's query parameters
   // Set the API key
-  var queryParams = { "api-key": "1583681dac81837eff11223ef03cd809" };
-
+  var queryParams = { "appid": "1583681dac81837eff11223ef03cd809" };
+  
   // Add the user input into the queryParams object
   queryParams.q = $("#city-field")
     .val().trim();
 
 
   // Logging the URL so we have access to it for troubleshooting
-  console.log("---------------\n" + queryURL + "\n---------------");
   console.log(queryURL + $.param(queryParams));
   return queryURL + $.param(queryParams);
 }
@@ -31,9 +30,9 @@ function updatePage(wData) {
   console.log(wData);
 
   // Loop through and build elements for the defined number of articles
-  for (var i = 0; i < numCities; i++) {
+
     // Get specific city info for current index
-    var city = wData.response.docs[i];
+    var city = wData.response.city[i];
 
     // Increase the cityCount (track city # - starting at 1)
     var cityCount = i + 1;
@@ -48,17 +47,15 @@ function updatePage(wData) {
     // log and append city name to $cityList
     var cityName = city.name;
     var $cityListItem = $("<li class='list-group-item'>");
+    console.log(cityName);
+    $cityListItem.append(
+      "<span class='label label-primary'>" +
+        "</span>" +
+        "<strong> " +
+        city.name +
+        "</strong>"
+    );
 
-    if (cityName && city.name) {
-      console.log(cityName);
-      $cityListItem.append(
-        "<span class='label label-primary'>" +
-          "</span>" +
-          "<strong> " +
-          city.name +
-          "</strong>"
-      );
-    };
 
     // If the city has a byline, log and append to $cityList
    /* var byline = city.byline;
@@ -89,7 +86,7 @@ function updatePage(wData) {
     // Append the city
     $cityList.append($cityListItem);*/
   }
-}
+
 
 // Function to empty out the citys
 function clear() {
@@ -99,17 +96,15 @@ function clear() {
 // CLICK HANDLERS
 // ==========================================================
 
-// .on("click") function associated with the Search Button
+// search
 $("#city-search").on("click", function(event) {
-  // This line allows us to take advantage of the HTML "submit" property
-  // This way we can hit enter on the keyboard and it registers the search
-  // (in addition to clicks). Prevents the page from reloading on form submit.
+
   event.preventDefault();
 
-  // Empty the region associated with the articles
-  clear();
+  
+  //clear();
 
-  // Build the query URL for the ajax request to the NYT API
+  // Build the query URL
   var queryURL = wQueryURL();
 
   // Make the AJAX request to the API - GETs the JSON data at the queryURL.
