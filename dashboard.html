@@ -119,14 +119,17 @@
   
   $(document).ready(function() {
     $('.city-search').click(function() {
-       event.preventDefault()
-       readyData('imperial')
+       event.preventDefault();
+       readyData('imperial');
     });
     $('#city-field').submit(function() {
-       readyData('imperial')
+       readyData('imperial');
     })
-    $('#clear-all').submit(function() {
-       reset()
+    $('#city-field').click(function() {
+      ('#city-field').reset();
+    })
+    $('#clear-all').click(function() {
+       reset();
     })
   });
 
