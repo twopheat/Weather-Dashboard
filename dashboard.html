@@ -56,14 +56,14 @@
 
                 <div>
                     <label class="col">Search History</label>
-                    <button id="city-list" placeholder="No Query Yet" class="col p-3 bg-white rounded-top border border-bottom1"></button>
+                    <div id="city-list" placeholder="No Query Yet" class="col p-3 bg-white rounded-top border border-bottom1"></div>
                 </div>
             </div>
 
           <div class="col-sm-8">
 
-                <button id="city-weather" class="col-sm-12 shadow-sm rounded-lg pt-5 pb-5 bg-white"></button>
-                <button id="5day-weather" class="col-sm-12 card pt-5 pb-5 bg-white"></button>
+                <button id="daily-weather" class="col-sm-12 shadow-sm rounded-lg pt-5 pb-5 bg-white"></button>
+                <button id="city-weather" class="col-sm-12 card pt-5 pb-5 bg-white"></button>
 
 
           </div> 
@@ -147,13 +147,6 @@
     $('#city-weather').html(html)
    };
 
-   var cityLists = response.cityLists;
-    console.log(response.cityLists);    
-
-    cityList = []
-    for(var q of cityLists){
-      cityList.push(q)
-    };
 
  </script>
 </body>
