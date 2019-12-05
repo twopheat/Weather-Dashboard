@@ -40,7 +40,7 @@
      
      <div class="card">
           
-        <div class="card-body">
+        <form id="form" class="card-body">
            <div class="row">
             <div class="form-group col-sm-4 pt-4 bg-light">
 
@@ -49,7 +49,7 @@
                 <input type="text" placeholder="Pick a City..." class="form-input form-control" id="city-field">
                 <button type="submit" class="city-search btn btn-default" id="city-search">
                     <i class="fa fa-search"></i> Search</button>
-                  <button class="btn btn-default" id="clear-all">
+                <button class="btn btn-default" id="clear-all">
                     <i class="fa fa-trash"></i> Clear</button>
               </div>
 
@@ -62,13 +62,13 @@
 
           <div class="col-sm-8">
 
-                <button id="daily-weather" class="col-sm-12 shadow-sm rounded-lg pt-5 pb-5 bg-white"></button>
-                <button id="city-weather" class="col-sm-12 card pt-5 pb-5 bg-white"></button>
+                <button id="current-weather" class="col-sm-12 shadow-sm rounded-lg pt-5 pb-5 bg-white"></button>
+                <button id="5day-weather" class="col-sm-12 card pt-5 pb-5 bg-white"></button>
 
 
           </div> 
 
-         </div>
+        </form>
 
       </div>
 
@@ -96,13 +96,13 @@
 
     if (cityField && cityField != ''){
       cityField = cityField.trim()
-      getData(wURL, cityField, wAppId, units)
+      getData1(wURL, cityField, wAppId, units)
     }
     else {
       alert('City field is empty!')
     }
     $('#city-list').append('<button class="btn-lg bg-white re-list">' + cityField + '</button>'+'</br></br>');
- 
+    
 
     }
 
@@ -112,41 +112,50 @@
 
     if (reList && reList != ''){
      reList = reList.trim()
-     getData(wURL, reList, wAppId, units)
+     getData3(wURL, reList, wAppId, units)
      }
    };
 
-
-
+  
   $(document).ready(function() {
     $('.city-search').click(function() {
+       event.preventDefault()
        readyData('imperial')
-       relistData('imperial')
+    });
+    $('#city-field').submit(function() {
+       readyData('imperial')
+    })
+    $('#clear-all').submit(function() {
+       reset()
     })
   });
 
-  function getData (url, cityName, appId, units) {
+  function getData1(url, cityName, appId, units) {
     var request = $.ajax({
       url:url,
       dataType: "jsonp",
       contentType:'text/plain',
       data: {q: cityName, appid: wAppId, units:units},
-      jsonpCallback: "fetchData",
+      jsonpCallback: "fetchData1",
       type:"GET"
     })
    };
-  function fetchData (forecast) {
+   
+
+  function fetchData1 (forecast) {
     console.log(forecast)
     var html = '',
-      cityName = forecast.city.name
-    
-    html += '<h3> Weather Forecast for ' + cityName + '</h3>'
-    forecast.list.forEach(function(forecastEntry, index, list) {
-      html += '<p>' + forecastEntry.dt_txt + ': ' + forecastEntry.main.temp + '</p>'
-    })
+      cityName = forecast.city.name;
 
-    $('#city-weather').html(html)
+      html += '<h4> 5-Day Forecast for ' + cityName + '</h4>'
+    forecast.list.forEach(function(forecastEntry, index, list) {
+      html += '<div class="row">'+ '<div class="col-sm pt-4 pb-4 card shadow-sm rounded-sm">' + forecastEntry.dt_txt + ': ' + forecastEntry.main.temp.toFixed(0) + '°</div>' + '</div>'
+                
+    })
+   
+    $('#5day-weather').html(html)
    };
+
 
 
  </script>
