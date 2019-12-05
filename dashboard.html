@@ -82,7 +82,7 @@
   
 
  <footer>
-    <p id="copyright">Copyright © Brad|J</p>
+    <p id="copyright">Brad|J</p>
  </footer>
 
  <script type="text/javascript">
@@ -129,6 +129,7 @@
     var request = $.ajax({
       url:url,
       dataType: "jsonp",
+      contentType:'text/plain',
       data: {q: cityName, appid: wAppId, units:units},
       jsonpCallback: "fetchData",
       type:"GET"
