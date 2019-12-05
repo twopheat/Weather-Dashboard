@@ -1,8 +1,6 @@
 <html lang="en"><head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -14,32 +12,42 @@
       <div id="logo">
           <img id="logopic" src="assets/images/logo.png" alt="Logo">
       </div>
-      <div class="topnav">
-          <a href="contact.html">Contact</a><a class="bar">|</a>
-          <a href="dashboard.html">Dashboard</a><a class="bar">|</a>
-          <a href="portfolio.html">Portfolio</a><a class="bar">|</a>
-          <a href="index.html">About</a>
-          
-      </div>
+      <nav class="navbar navbar-expand-lg navbar-light bg-white">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+          <a class="navbar-brand" href="#"></a>
+      
+          <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <div class="navbar-nav float-right text-right pr-3">
+
+              <a class="nav-item nav-link" href="contact.html">Contact</a><a class="bar">|</a>
+              <a class="nav-item nav-link" href="dashboard.html">Dashboard</a><a class="bar">|</a>
+              <a class="nav-item nav-link" href="portfolio.html">Portfolio</a><a class="bar">|</a>
+              <a class="nav-item nav-link active" href="index.html">About <span class="sr-only">(current)</span></a>
+              
+            </div>
+          </div>
+        </nav>
+
       
    </header>
   
    
     <div class="container mt-5">
-
+      
       <h1 class="text-white bg-secondary ptitle">Weather Dashboard</h1>
      
-     <div class="row card">
-      
-
+     <div class="card">
           
-          <div class="card-body">
+        <div class="card-body">
+           <div class="row">
             <div class="form-group col-sm-4 pt-4 bg-light">
 
               <!-- form for handling input + create text box for city search-->
               <div class="form-group">
                 <input type="text" placeholder="Pick a City..." class="form-input form-control" id="city-field">
-                <button type="submit" class="btn btn-default" id="city-search">
+                <button type="submit" class="city-search btn btn-default" id="city-search">
                     <i class="fa fa-search"></i> Search</button>
                   <button class="btn btn-default" id="clear-all">
                     <i class="fa fa-trash"></i> Clear</button>
@@ -47,25 +55,26 @@
 
 
                 <div>
-                    <label class="col">CITY LIST</label>
-                    <button id="city-list" placeholder="CITY LIST" class="col p-3 bg-white rounded-top border border-bottom1">ATLANTA</button>
+                    <label class="col">Search History</label>
+                    <button id="city-list" placeholder="No Query Yet" class="col p-3 bg-white rounded-top border border-bottom1"></button>
                 </div>
-            </form>
+            </div>
 
-            </div>
-           
-   
-            <div class="row bg-white">
-                <button id="city-weather" class="col-sm-12 shadow-sm rounded-lg pt-5 pb-5 bg-white">Row 2</button>
-                <button id="5day-weather" class="col-sm-12 card pt-5 pb-5 bg-white">Row 3</button>
-            </div>
-          </div>
+          <div class="col-sm-8">
+
+                <button id="city-weather" class="col-sm-12 shadow-sm rounded-lg pt-5 pb-5 bg-white"></button>
+                <button id="5day-weather" class="col-sm-12 card pt-5 pb-5 bg-white"></button>
+
+
+          </div> 
+
+         </div>
 
       </div>
 
      </div>
 
-
+    </div>
 
    
     
@@ -76,6 +85,76 @@
     <p id="copyright">Copyright © Brad|J</p>
  </footer>
 
- <script type="text/javascript" src="assets/js/script.js"></script>
+ <script type="text/javascript">
+    // queryURL is the API url and Set the API key
+    var wAppId = '1583681dac81837eff11223ef03cd809',
+        wURL = 'http://api.openweathermap.org/data/2.5/forecast';
+  
+  var readyData = function(units) {
+
+    var cityField = $('#city-field').val()
+
+    if (cityField && cityField != ''){
+      cityField = cityField.trim()
+      getData(wURL, cityField, wAppId, units)
+    }
+    else {
+      alert('City field is empty!')
+    }
+    $('#city-list').append('<button class="btn-lg bg-white re-list">' + cityField + '</button>'+'</br></br>');
+ 
+
+    }
+
+  var relistData = function(units) {
+
+    var reList = $('.re-list').val()
+
+    if (reList && reList != ''){
+     reList = reList.trim()
+     getData(wURL, reList, wAppId, units)
+     }
+   };
+
+
+
+  $(document).ready(function() {
+    $('.city-search').click(function() {
+       readyData('imperial')
+       relistData('imperial')
+    })
+  });
+
+  function getData (url, cityName, appId, units) {
+    var request = $.ajax({
+      url:url,
+      dataType: "jsonp",
+      data: {q: cityName, appid: wAppId, units:units},
+      jsonpCallback: "fetchData",
+      type:"GET"
+    })
+   };
+  function fetchData (forecast) {
+    console.log(forecast)
+    var html = '',
+      cityName = forecast.city.name
+    
+    html += '<h3> Weather Forecast for ' + cityName + '</h3>'
+    forecast.list.forEach(function(forecastEntry, index, list) {
+      html += '<p>' + forecastEntry.dt_txt + ': ' + forecastEntry.main.temp + '</p>'
+    })
+
+    $('#city-weather').html(html)
+   };
+
+   var cityLists = response.cityLists;
+    console.log(response.cityLists);    
+
+    cityList = []
+    for(var q of cityLists){
+      cityList.push(q)
+    };
+
+ </script>
 </body>
 </html>
