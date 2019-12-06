@@ -42,7 +42,7 @@
           
         <form id="form" class="card-body">
            <div class="row">
-            <div class="form-group col-sm-4 pt-4 bg-light">
+            <div class="col-sm-4 pt-4 bg-light">
 
               <!-- form for handling input + create text box for city search-->
               <div class="form-group">
@@ -52,6 +52,7 @@
                 <button class="btn btn-default" id="clear-all">
                     <i class="fa fa-trash"></i> Clear</button>
               </div>
+            </form>
 
 
                 <div>
@@ -66,9 +67,7 @@
                 <button id="5day-weather" class="col-sm-12 card pt-5 pb-5 bg-white"></button>
 
 
-          </div> 
-
-        </form>
+          </div>
 
       </div>
 
@@ -97,24 +96,22 @@
     if (cityField && cityField != ''){
       cityField = cityField.trim()
       getData1(wURL, cityField, wAppId, units)
+      $('#city-list').append('<button class="btn-lg bg-white re-list">' + cityField.toUpperCase() + '</button>'+'</br></br>')
     }
     else {
       alert('City field is empty!')
     }
-    $('#city-list').append('<button class="btn-lg bg-white re-list">' + cityField + '</button>'+'</br></br>');
-    
-
     }
 
-  var relistData = function(units) {
+  /*var relistData = function(units) {
 
     var reList = $('.re-list').val()
 
     if (reList && reList != ''){
      reList = reList.trim()
-     getData3(wURL, reList, wAppId, units)
+     getData(wURL, reList, wAppId, units)
      }
-   };
+   };*/
 
   
   $(document).ready(function() {
@@ -123,10 +120,8 @@
        readyData('imperial');
     });
     $('#city-field').submit(function() {
+       event.preventDefault();
        readyData('imperial');
-    })
-    $('#city-field').click(function() {
-      ('#city-field').reset();
     })
     $('#clear-all').click(function() {
        reset();
@@ -159,7 +154,34 @@
     $('#5day-weather').html(html)
    };
 
+//---------------------------fetch 2-------------------
 
+
+function getData2(url, cityName, appId, units) {
+    var request = $.ajax({
+      url:url,
+      dataType: "jsonp",
+      contentType:'text/plain',
+      data: {q: cityName, appid: wAppId, units:units},
+      jsonpCallback: "fetchData2",
+      type:"GET"
+    })
+   };
+   
+
+  function fetchData2 (forecast) {
+    console.log(fetchData2)
+    var html = '',
+      cityName = forecast.city.name;
+
+      html += '<h4> Current Forecast for ' + cityName + '</h4>'
+    forecast.list.forEach(function(forecastEntry, index, list) {
+      html += '<div class="row">'+ '<div class="col-sm pt-4 pb-4 card shadow-sm rounded-sm">' + forecastEntry.dt_txt + ': ' + forecastEntry.main.temp.toFixed(0) + '°</div>' + '</div>'
+                
+    })
+   
+    $('#current-weather').html(html)
+   };
 
  </script>
 </body>
