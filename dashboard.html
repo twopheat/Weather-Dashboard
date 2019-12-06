@@ -96,6 +96,7 @@
     if (cityField && cityField != ''){
       cityField = cityField.trim()
       getData1(wURL, cityField, wAppId, units)
+      getData2(wURL, cityField, wAppId, units)
       $('#city-list').append('<button class="btn-lg bg-white re-list">' + cityField.toUpperCase() + '</button>'+'</br></br>')
     }
     else {
@@ -122,10 +123,10 @@
     $('#city-field').submit(function() {
        event.preventDefault();
        readyData('imperial');
-    })
+    });
     $('#clear-all').click(function() {
        reset();
-    })
+    });
   });
 
   function getData1(url, cityName, appId, units) {
