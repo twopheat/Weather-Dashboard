@@ -176,7 +176,7 @@ function getData2(url, cityName, appId, units) {
       cityName = forecast.city.name;
 
       html += '<h4> Current Forecast for ' + cityName + '</h4>'
-    forecast.list.forEach(function(forecastEntry, index, list) {
+    forecast.list.forEach(function(forecastEntry) {
       html += '<div class="row">'+ '<div class="col-sm pt-4 pb-4 card shadow-sm rounded-sm">' + forecastEntry.dt_txt + ': ' + forecastEntry.main.temp.toFixed(0) + '°</div>' + '</div>'
                 
     })
