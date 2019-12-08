@@ -88,7 +88,10 @@
     // queryURL is the API url and Set the API key
     var wAppId = '1583681dac81837eff11223ef03cd809',
         wURL = 'https://api.openweathermap.org/data/2.5/forecast';
-  
+    var cAppId = "bbea62cdba22465b7f7589c50dd2081e",
+        cURL = "https://api.openweathermap.org/data/2.5/weather";
+
+
   var readyData = function(units) {
 
     var cityField = $('#city-field').val()
@@ -96,7 +99,7 @@
     if (cityField && cityField != ''){
       cityField = cityField.trim()
       getData1(wURL, cityField, wAppId, units)
-      getData2(wURL, cityField, wAppId, units)
+      getData2(cURL, cityField, cAppId, units)
       $('#city-list').append('<button class="btn-lg bg-white re-list">' + cityField.toUpperCase() + '</button>'+'</br></br>')
     }
     else {
@@ -125,6 +128,7 @@
        readyData('imperial');
     });
     $('#clear-all').click(function() {
+       event.preventDefault();
        reset();
     });
   });
@@ -132,6 +136,7 @@
   function getData1(url, cityName, appId, units) {
     var request = $.ajax({
       url:url,
+      crossDomain:true,
       dataType: "jsonp",
       contentType:'text/plain',
       data: {q: cityName, appid: wAppId, units:units},
@@ -148,7 +153,7 @@
 
       html += '<h4> 5-Day Forecast for ' + cityName + '</h4>'
     forecast.list.forEach(function(forecastEntry, index, list) {
-      html += '<div class="row">'+ '<div class="col-sm pt-4 pb-4 card shadow-sm rounded-sm">' + forecastEntry.dt_txt + ': ' + forecastEntry.main.temp.toFixed(0) + '°</div>' + '</div>'
+      html += '<div class="row">' + '<div class="left col-4 pt-1 pb-1 card shadow-sm rounded-sm">' + forecastEntry.dt_txt + ': ' + forecastEntry.main.temp.toFixed(0) + '°</div>' + '</div>'
                 
     })
    
@@ -161,25 +166,26 @@
 function getData2(url, cityName, appId, units) {
     var request = $.ajax({
       url:url,
+      crossDomain:true,
       dataType: "jsonp",
       contentType:'text/plain',
-      data: {q: cityName, appid: wAppId, units:units},
+      data: {q: cityName, appid: cAppId, units:units},
       jsonpCallback: "fetchData2",
       type:"GET"
     })
    };
    
 
-  function fetchData2 (forecast) {
-    console.log(fetchData2)
+  function fetchData2 (weather) {
+    console.log(weather)
     var html = '',
-      cityName = forecast.city.name;
+      cityName = weather.name;
 
       html += '<h4> Current Forecast for ' + cityName + '</h4>'
-    forecast.list.forEach(function(forecastEntry) {
-      html += '<div class="row">'+ '<div class="col-sm pt-4 pb-4 card shadow-sm rounded-sm">' + forecastEntry.dt_txt + ': ' + forecastEntry.main.temp.toFixed(0) + '°</div>' + '</div>'
+    
+      html += '<div class="row">'+ '<div class="col-sm pt-4 pb-4 card shadow-sm rounded-sm">' + weather.dt + ': ' + weather.main.temp.toFixed(0) + '°</div>' + '</div>'
                 
-    })
+    
    
     $('#current-weather').html(html)
    };
