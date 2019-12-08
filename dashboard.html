@@ -63,8 +63,8 @@
 
           <div class="col-sm-8">
 
-                <button id="current-weather" class="col-sm-12 shadow-sm rounded-lg pt-5 pb-5 bg-white"></button>
-                <button id="5day-weather" class="col-sm-12 card pt-5 pb-5 bg-white"></button>
+                <div id="current-weather" class="col-sm-12 shadow-sm rounded-lg pt-5 pb-5 bg-white"></div>
+                <div id="5day-weather" class="col-sm-12 card pt-5 pb-5 bg-white"></div>
 
 
           </div>
@@ -86,11 +86,11 @@
 
  <script type="text/javascript">
     // queryURL is the API url and Set the API key
-    var wAppId = '1583681dac81837eff11223ef03cd809',
+    var wAppId = '0bd52106274cc3890a71c0c3b0805f13',
         wURL = 'https://api.openweathermap.org/data/2.5/forecast';
-    var cAppId = "bbea62cdba22465b7f7589c50dd2081e",
-        cURL = "https://api.openweathermap.org/data/2.5/weather";
-
+    var cAppId = 'bbea62cdba22465b7f7589c50dd2081e',
+        cURL = 'https://api.openweathermap.org/data/2.5/weather';
+  
 
   var readyData = function(units) {
 
@@ -100,14 +100,14 @@
       cityField = cityField.trim()
       getData1(wURL, cityField, wAppId, units)
       getData2(cURL, cityField, cAppId, units)
-      $('#city-list').append('<button class="btn-lg bg-white re-list">' + cityField.toUpperCase() + '</button>'+'</br></br>')
+      $('#city-list').append('<button class="btn-lg col-sm-12 bg-white re-list">' + cityField.toUpperCase() + '</button>'+'</br></br>')
     }
     else {
       alert('City field is empty!')
     }
     }
 
-  /*var relistData = function(units) {
+  var relistData = function(units) {
 
     var reList = $('.re-list').val()
 
@@ -115,7 +115,7 @@
      reList = reList.trim()
      getData(wURL, reList, wAppId, units)
      }
-   };*/
+   };
 
   
   $(document).ready(function() {
@@ -128,7 +128,6 @@
        readyData('imperial');
     });
     $('#clear-all').click(function() {
-       event.preventDefault();
        reset();
     });
   });
@@ -136,6 +135,7 @@
   function getData1(url, cityName, appId, units) {
     var request = $.ajax({
       url:url,
+      cnt:5,
       crossDomain:true,
       dataType: "jsonp",
       contentType:'text/plain',
@@ -151,11 +151,10 @@
     var html = '',
       cityName = forecast.city.name;
 
-      html += '<h4> 5-Day Forecast for ' + cityName + '</h4>'
-    forecast.list.forEach(function(forecastEntry, index, list) {
-      html += '<div class="row">' + '<div class="left col-4 pt-1 pb-1 card shadow-sm rounded-sm">' + forecastEntry.dt_txt + ': ' + forecastEntry.main.temp.toFixed(0) + '°</div>' + '</div>'
+      html += '<h4> 5-Day Forecast for ' + cityName + '</h4></br>'
+      //html += '<div class="row">' + '<div class="left col-4 pt-1 pb-1 card shadow-sm rounded-sm">' + daily.dt_txt + ': ' + daily.list.temp.toFixed(0) + '°</div>' + '</div>'
                 
-    })
+
    
     $('#5day-weather').html(html)
    };
@@ -180,10 +179,15 @@ function getData2(url, cityName, appId, units) {
     console.log(weather)
     var html = '',
       cityName = weather.name;
+      var datetime = Date($.now());
+      var daY = datetime.split(' ')[0]
+      var montH = datetime.split(' ')[1]
+      var datE = datetime.split(' ')[2]
+
 
       html += '<h4> Current Forecast for ' + cityName + '</h4>'
     
-      html += '<div class="row">'+ '<div class="col-sm pt-4 pb-4 card shadow-sm rounded-sm">' + weather.dt + ': ' + weather.main.temp.toFixed(0) + '°</div>' + '</div>'
+      html += '<div class="row">'+ '<div class="col-sm-4 pt-4 pb-4 card shadow-sm rounded-sm">' + montH + ' ' + datE + ': ' + weather.main.temp.toFixed(0) + '°</div>' + '</div>'
                 
     
    
