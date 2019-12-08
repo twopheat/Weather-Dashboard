@@ -1,6 +1,7 @@
 <html lang="en"><head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="assets/js/moment.js"></script>
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -63,7 +64,7 @@
 
           <div class="col-sm-8">
 
-                <div id="current-weather" class="col-sm-12 shadow-sm rounded-lg pt-5 pb-5 bg-white"></div>
+                <div id="current-weather" class="col-sm-12 border border-grey shadow-sm rounded-lg pt-5 pb-5 bg-white"></div>
                 <div id="5day-weather" class="col-sm-12 card pt-5 pb-5 bg-white"></div>
 
 
@@ -90,30 +91,33 @@
         wURL = 'https://api.openweathermap.org/data/2.5/forecast';
     var cAppId = 'bbea62cdba22465b7f7589c50dd2081e',
         cURL = 'https://api.openweathermap.org/data/2.5/weather';
+    
+
   
 
   var readyData = function(units) {
 
     var cityField = $('#city-field').val()
-
+    
     if (cityField && cityField != ''){
       cityField = cityField.trim()
       getData1(wURL, cityField, wAppId, units)
       getData2(cURL, cityField, cAppId, units)
-      $('#city-list').append('<button class="btn-lg col-sm-12 bg-white re-list">' + cityField.toUpperCase() + '</button>'+'</br></br>')
+      $('#city-list').append('<button class="btn-lg col-sm-12 bg-white re-list">' + cityField.toUpperCase() + '</button><br><br>')
     }
     else {
       alert('City field is empty!')
     }
     }
 
-  var relistData = function(units) {
+    var relistData = function(units) {
 
     var reList = $('.re-list').val()
 
     if (reList && reList != ''){
      reList = reList.trim()
-     getData(wURL, reList, wAppId, units)
+     getData1(wURL, cityField, wAppId, units)
+     getData2(cURL, cityField, cAppId, units)
      }
    };
 
@@ -132,6 +136,8 @@
     });
   });
 
+  //-----------------------Get and fetch 1-------------------
+
   function getData1(url, cityName, appId, units) {
     var request = $.ajax({
       url:url,
@@ -147,23 +153,32 @@
    
 
   function fetchData1 (forecast) {
-    console.log(forecast)
     var html = '',
       cityName = forecast.city.name;
+      var iconLink1 = "http://openweathermap.org/img/w/" + forecast.list[1].weather[0].icon + ".png";
+      var iconLink2 = "http://openweathermap.org/img/w/" + forecast.list[9].weather[0].icon + ".png";
+      var iconLink3 = "http://openweathermap.org/img/w/" + forecast.list[17].weather[0].icon + ".png";
+      var iconLink4 = "http://openweathermap.org/img/w/" + forecast.list[25].weather[0].icon + ".png";
+      var iconLink5 = "http://openweathermap.org/img/w/" + forecast.list[33].weather[0].icon + ".png";
 
-      html += '<h4> 5-Day Forecast for ' + cityName + '</h4></br>'
-      //html += '<div class="row">' + '<div class="left col-4 pt-1 pb-1 card shadow-sm rounded-sm">' + daily.dt_txt + ': ' + daily.list.temp.toFixed(0) + '°</div>' + '</div>'
-                
-
+      html += '<h4> 5-Day Forecast for ' + forecast.city.name + '</h4><br>';
+      html += '<div class="row">'
+      html += '<p class="small left col m-1 pt-1 pb-1 bg-primary font-weight-bold text-white card shadow-sm rounded-sm">' + forecast.list[1].dt_txt.split(' ')[0] + '<br> <img width="50" src="'+ iconLink1 + '"> <br>Temp: ' + forecast.list[1].main.temp.toFixed(0) + '°<br> Humidity:' + forecast.list[1].main.humidity + '%</p>';
+      html += '<p class="small left col m-1 pt-1 pb-1 bg-primary font-weight-bold text-white card shadow-sm rounded-sm">' + forecast.list[9].dt_txt.split(' ')[0] + '<br> <img width="50" src="'+ iconLink2 + '"> <br>Temp: ' + forecast.list[9].main.temp.toFixed(0) + '°<br> Humidity:' + forecast.list[9].main.humidity + '%</p>';
+      html += '<p class="small left col m-1 pt-1 pb-1 bg-primary font-weight-bold text-white card shadow-sm rounded-sm">' + forecast.list[17].dt_txt.split(' ')[0] + '<br> <img width="50" src="'+ iconLink3 + '"> <br>Temp: ' + forecast.list[17].main.temp.toFixed(0) + '°<br> Humidity:' + forecast.list[17].main.humidity + '%</p>';
+      html += '<p class="small left col m-1 pt-1 pb-1 bg-primary font-weight-bold text-white card shadow-sm rounded-sm">' + forecast.list[25].dt_txt.split(' ')[0] + '<br> <img width="50" src="'+ iconLink4 + '"> <br>Temp: ' + forecast.list[25].main.temp.toFixed(0) + '°<br> Humidity:' + forecast.list[25].main.humidity + '%</p>';
+      html += '<p class="small left col m-1 pt-1 pb-1 bg-primary font-weight-bold text-white card shadow-sm rounded-sm">' + forecast.list[33].dt_txt.split(' ')[0] + '<br> <img width="50" src="'+ iconLink5 + '"> <br>Temp: ' + forecast.list[33].main.temp.toFixed(0) + '°<br> Humidity:' + forecast.list[33].main.humidity + '%</p>';
+      html += '</div>'                
+      
    
     $('#5day-weather').html(html)
    };
 
-//---------------------------fetch 2-------------------
+//-----------------------Get and fetch 2-------------------
 
 
 function getData2(url, cityName, appId, units) {
-    var request = $.ajax({
+    var request1 = $.ajax({
       url:url,
       crossDomain:true,
       dataType: "jsonp",
@@ -172,27 +187,63 @@ function getData2(url, cityName, appId, units) {
       jsonpCallback: "fetchData2",
       type:"GET"
     })
-   };
-   
+
+  };
+
+
 
   function fetchData2 (weather) {
-    console.log(weather)
     var html = '',
       cityName = weather.name;
-      var datetime = Date($.now());
-      var daY = datetime.split(' ')[0]
-      var montH = datetime.split(' ')[1]
-      var datE = datetime.split(' ')[2]
+
+      var lati = weather.coord.lat;
+      var long = weather.coord.lon;
+
+      var iconLink0 = "http://openweathermap.org/img/w/" + weather.weather[0].icon + ".png";
+      
+      
+      console.log(weather)
 
 
-      html += '<h4> Current Forecast for ' + cityName + '</h4>'
+      html += '<h4 class="font-weight-bold">' + cityName + ' ' + moment().format('DD-MM-YYYY') + ' <img src="'+ iconLink0 + '"></h4>'
+      html += '<div class="row">'
+      html += '<div class="col-sm-4 pt-4 pb-4 card shadow-sm rounded-sm">Temp: ' + weather.main.temp.toFixed(0) + '°<br>'
+      html += 'Humidity: ' + weather.main.humidity + '<br>'
+      html += 'Wind Speed: ' + weather.wind.speed.toFixed(1) + ' MPH <br>'
+         
     
-      html += '<div class="row">'+ '<div class="col-sm-4 pt-4 pb-4 card shadow-sm rounded-sm">' + montH + ' ' + datE + ': ' + weather.main.temp.toFixed(0) + '°</div>' + '</div>'
-                
-    
+
    
     $('#current-weather').html(html)
-   };
+  };
+
+
+  function getData3(url, appid, lat, lon) {
+    var requestUV = $.ajax({
+       url:'https://api.openweathermap.org/data/2.5/uvi',
+       crossDomain:true,
+       dataType: "jsonp",
+       contentType:'text/plain',
+       data: {appid: 'a27e1664ed245a021cbb74c654903b2b', lat: lat, lon: lon},
+       jsonpCallback: "fetchUV",
+       type:"GET"
+      })
+      var lati = uvi.lat;
+      var long = uvi.lon;
+      console.log(getData3)
+  
+
+      function fetchUV (uvi) {
+        var html = ''
+        var UV = uvi.value
+        console.log(uvi)
+        html += '<p class="bg-red">UV Index: ' + UV.toFixed(2) + '</p></div>'
+        html += '</div>'
+
+        $('#current-weather').html(html)
+      }
+      
+    };
 
  </script>
 </body>
