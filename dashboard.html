@@ -91,8 +91,11 @@
         wURL = 'https://api.openweathermap.org/data/2.5/forecast';
     var cAppId = 'bbea62cdba22465b7f7589c50dd2081e',
         cURL = 'https://api.openweathermap.org/data/2.5/weather';
+    var uAppId = 'a27e1664ed245a021cbb74c654903b2b',
+        uURL = 'https://api.openweathermap.org/data/2.5/uvi';
     
-
+  var lati2
+  var long2
   
 
   var readyData = function(units) {
@@ -103,6 +106,7 @@
       cityField = cityField.trim()
       getData1(wURL, cityField, wAppId, units)
       getData2(cURL, cityField, cAppId, units)
+      getData3(uURL, lati2, long2, uAppId)
       $('#city-list').append('<button class="btn-lg col-sm-12 bg-white re-list">' + cityField.toUpperCase() + '</button><br><br>')
     }
     else {
@@ -110,12 +114,13 @@
     }
     }
 
+
     var relistData = function(units) {
 
     var reList = $('.re-list').val()
 
     if (reList && reList != ''){
-     reList = reList.trim()
+     cityField = reList.trim()
      getData1(wURL, cityField, wAppId, units)
      getData2(cURL, cityField, cAppId, units)
      }
@@ -138,6 +143,8 @@
 
   //-----------------------Get and fetch 1-------------------
 
+
+
   function getData1(url, cityName, appId, units) {
     var request = $.ajax({
       url:url,
@@ -149,6 +156,7 @@
       jsonpCallback: "fetchData1",
       type:"GET"
     })
+    
    };
    
 
@@ -163,11 +171,11 @@
 
       html += '<h4> 5-Day Forecast for ' + forecast.city.name + '</h4><br>';
       html += '<div class="row">'
-      html += '<p class="small left col m-1 pt-1 pb-1 bg-primary font-weight-bold text-white card shadow-sm rounded-sm">' + forecast.list[1].dt_txt.split(' ')[0] + '<br> <img width="50" src="'+ iconLink1 + '"> <br>Temp: ' + forecast.list[1].main.temp.toFixed(0) + '°<br> Humidity:' + forecast.list[1].main.humidity + '%</p>';
-      html += '<p class="small left col m-1 pt-1 pb-1 bg-primary font-weight-bold text-white card shadow-sm rounded-sm">' + forecast.list[9].dt_txt.split(' ')[0] + '<br> <img width="50" src="'+ iconLink2 + '"> <br>Temp: ' + forecast.list[9].main.temp.toFixed(0) + '°<br> Humidity:' + forecast.list[9].main.humidity + '%</p>';
-      html += '<p class="small left col m-1 pt-1 pb-1 bg-primary font-weight-bold text-white card shadow-sm rounded-sm">' + forecast.list[17].dt_txt.split(' ')[0] + '<br> <img width="50" src="'+ iconLink3 + '"> <br>Temp: ' + forecast.list[17].main.temp.toFixed(0) + '°<br> Humidity:' + forecast.list[17].main.humidity + '%</p>';
-      html += '<p class="small left col m-1 pt-1 pb-1 bg-primary font-weight-bold text-white card shadow-sm rounded-sm">' + forecast.list[25].dt_txt.split(' ')[0] + '<br> <img width="50" src="'+ iconLink4 + '"> <br>Temp: ' + forecast.list[25].main.temp.toFixed(0) + '°<br> Humidity:' + forecast.list[25].main.humidity + '%</p>';
-      html += '<p class="small left col m-1 pt-1 pb-1 bg-primary font-weight-bold text-white card shadow-sm rounded-sm">' + forecast.list[33].dt_txt.split(' ')[0] + '<br> <img width="50" src="'+ iconLink5 + '"> <br>Temp: ' + forecast.list[33].main.temp.toFixed(0) + '°<br> Humidity:' + forecast.list[33].main.humidity + '%</p>';
+      html += '<p class="small left col m-1 pt-1 pb-1 bg-primary font-weight-bold text-white card shadow-sm rounded-sm">' + forecast.list[1].dt_txt.split(' ')[0] + '<br> <img width="50" src="'+ iconLink1 + '"> <br>Temp: ' + forecast.list[1].main.temp_max.toFixed(0) + '°<br> Humidity:' + forecast.list[1].main.humidity + '%</p>';
+      html += '<p class="small left col m-1 pt-1 pb-1 bg-primary font-weight-bold text-white card shadow-sm rounded-sm">' + forecast.list[9].dt_txt.split(' ')[0] + '<br> <img width="50" src="'+ iconLink2 + '"> <br>Temp: ' + forecast.list[9].main.temp_max.toFixed(0) + '°<br> Humidity:' + forecast.list[9].main.humidity + '%</p>';
+      html += '<p class="small left col m-1 pt-1 pb-1 bg-primary font-weight-bold text-white card shadow-sm rounded-sm">' + forecast.list[17].dt_txt.split(' ')[0] + '<br> <img width="50" src="'+ iconLink3 + '"> <br>Temp: ' + forecast.list[17].main.temp_max.toFixed(0) + '°<br> Humidity:' + forecast.list[17].main.humidity + '%</p>';
+      html += '<p class="small left col m-1 pt-1 pb-1 bg-primary font-weight-bold text-white card shadow-sm rounded-sm">' + forecast.list[25].dt_txt.split(' ')[0] + '<br> <img width="50" src="'+ iconLink4 + '"> <br>Temp: ' + forecast.list[25].main.temp_max.toFixed(0) + '°<br> Humidity:' + forecast.list[25].main.humidity + '%</p>';
+      html += '<p class="small left col m-1 pt-1 pb-1 bg-primary font-weight-bold text-white card shadow-sm rounded-sm">' + forecast.list[33].dt_txt.split(' ')[0] + '<br> <img width="50" src="'+ iconLink5 + '"> <br>Temp: ' + forecast.list[33].main.temp_max.toFixed(0) + '°<br> Humidity:' + forecast.list[33].main.humidity + '%</p>';
       html += '</div>'                
       
    
@@ -196,8 +204,10 @@ function getData2(url, cityName, appId, units) {
     var html = '',
       cityName = weather.name;
 
-      var lati = weather.coord.lat;
-      var long = weather.coord.lon;
+      lati = weather.coord.lat;
+      long = weather.coord.lon;
+      window.lati2 = lati;
+      window.long2 = long;
 
       var iconLink0 = "http://openweathermap.org/img/w/" + weather.weather[0].icon + ".png";
       
@@ -217,34 +227,29 @@ function getData2(url, cityName, appId, units) {
     $('#current-weather').html(html)
   };
 
-
+  
   function getData3(url, appid, lat, lon) {
     var requestUV = $.ajax({
        url:'https://api.openweathermap.org/data/2.5/uvi',
        crossDomain:true,
        dataType: "jsonp",
        contentType:'text/plain',
-       data: {appid: 'a27e1664ed245a021cbb74c654903b2b', lat: lat, lon: lon},
-       jsonpCallback: "fetchUV",
+       data: {lat: lati2, lon: long2, appid: 'a27e1664ed245a021cbb74c654903b2b'},
+       jsonpCallback: "fetchData3",
        type:"GET"
       })
-      var lati = uvi.lat;
-      var long = uvi.lon;
-      console.log(getData3)
-  
+      
 
-      function fetchUV (uvi) {
+      function fetchData3 (uvi) {
         var html = ''
-        var UV = uvi.value
-        console.log(uvi)
+        UV = uvi.value
+
         html += '<p class="bg-red">UV Index: ' + UV.toFixed(2) + '</p></div>'
         html += '</div>'
 
         $('#current-weather').html(html)
       }
-      
-    };
-
+  };
  </script>
 </body>
 </html>
