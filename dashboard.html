@@ -22,10 +22,10 @@
           <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
             <div class="navbar-nav float-right text-right pr-3">
 
-              <a class="nav-item nav-link" href="contact.html">Contact</a><a class="bar">|</a>
+              <a class="nav-item nav-link" href="https://twopheat.github.io/Portfolio/contact.html">Contact</a><a class="bar">|</a>
               <a class="nav-item nav-link" href="dashboard.html">Dashboard</a><a class="bar">|</a>
-              <a class="nav-item nav-link" href="portfolio.html">Portfolio</a><a class="bar">|</a>
-              <a class="nav-item nav-link active" href="index.html">About <span class="sr-only">(current)</span></a>
+              <a class="nav-item nav-link" href="https://twopheat.github.io/Portfolio/portfolio.html">Portfolio</a><a class="bar">|</a>
+              <a class="nav-item nav-link active" href="https://twopheat.github.io/Portfolio/index.html">About <span class="sr-only">(current)</span></a>
               
             </div>
           </div>
@@ -110,7 +110,7 @@
       getData1(wURL, cityField, wAppId, units)
       getData2(cURL, cityField, cAppId, units)
       //never did get this one firing below
-      getData3(uURL, lati2, long2, uAppId)
+      
       //this append applies a class to be able to re-list, but that does not work
       $('#city-list').append('<button class="btn-lg col-sm-12 bg-white re-list">' + cityField.toUpperCase() + '</button><br><br>')
     }
@@ -130,6 +130,8 @@
      getData2(cURL, cityField, cAppId, units)
      }
    };
+
+   getData3(uURL, lati2, long2, uAppId);
 
   //these listeners work well
   $(document).ready(function() {
@@ -240,7 +242,7 @@ function getData2(url, cityName, appId, units) {
        crossDomain:true,
        dataType: "jsonp",
        contentType:'text/plain',
-       data: {lat: lati2, lon: long2, appid: 'a27e1664ed245a021cbb74c654903b2b'},
+       data: {lat: lati2, lon: long2, appid: },
        jsonpCallback: "fetchData3",
        type:"GET"
       })
@@ -253,7 +255,7 @@ function getData2(url, cityName, appId, units) {
         html += '<p class="bg-red">UV Index: ' + UV.toFixed(2) + '</p></div>'
         html += '</div>'
 
-        $('#current-weather').html(html)
+        $('#current-weather').append(html)
       }
   };
   //I learned more and accomplished more this hw than any previousky, definitely getting this more +!
